@@ -1,0 +1,4 @@
+[[redirects]]
+  from = "/"
+  to = "/math-roadmap.html"
+  status = 200
