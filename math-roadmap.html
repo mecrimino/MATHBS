@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Mathematician's Path — Year 7 to Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&family=JetBrains+Mono:wght@400;500;600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#16231C;
+    --bg-panel:#1F3128;
+    --bg-panel-2:#24382E;
+    --chalk:#EDEAE0;
+    --chalk-muted:#9FB0A5;
+    --chalk-gold:#E3C567;
+    --chalk-blue:#8FC1D4;
+    --chalk-coral:#DE8F72;
+    --rule:rgba(237,234,224,0.14);
+    --rule-strong:rgba(237,234,224,0.28);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+  body{ margin:0; background:var(--bg); color:var(--chalk); font-family:'Literata', serif; font-size:17px; line-height:1.7; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      radial-gradient(1px 1px at 12% 22%, rgba(237,234,224,0.06) 0, transparent 40%),
+      radial-gradient(1px 1px at 68% 14%, rgba(237,234,224,0.05) 0, transparent 40%),
+      radial-gradient(1.5px 1.5px at 34% 61%, rgba(237,234,224,0.05) 0, transparent 40%),
+      radial-gradient(1px 1px at 82% 78%, rgba(237,234,224,0.06) 0, transparent 40%),
+      radial-gradient(1px 1px at 50% 92%, rgba(237,234,224,0.04) 0, transparent 40%);
+    opacity:0.6;
+  }
+  main, header, footer{ position:relative; z-index:1; }
+  .wrap{ max-width:760px; margin:0 auto; padding:0 24px; }
+  a{ color:var(--chalk-blue); text-decoration-color:rgba(143,193,212,0.4); }
+  a:hover{ text-decoration-color:var(--chalk-blue); }
+  a:focus-visible, button:focus-visible, summary:focus-visible{ outline:2px solid var(--chalk-gold); outline-offset:3px; }
+
+  header.hero{ padding:88px 0 56px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:'JetBrains Mono', monospace; font-size:12.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--chalk-gold); display:block; margin-bottom:18px; }
+  h1.title{ font-family:'Fraunces', serif; font-weight:600; font-size:clamp(34px, 6vw, 54px); line-height:1.08; margin:0 0 20px; letter-spacing:-0.01em; }
+  h1.title em{ font-style:italic; font-weight:500; color:var(--chalk-gold); }
+  .subtitle{ font-size:18px; color:var(--chalk-muted); max-width:560px; margin:0 0 40px; }
+  nav.map{ display:flex; flex-wrap:wrap; gap:8px 10px; padding-top:8px; }
+  nav.map a{ font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.03em; color:var(--chalk-muted); background:var(--bg-panel); border:1px solid var(--rule); padding:7px 12px; border-radius:3px; text-decoration:none; transition:border-color .15s ease, color .15s ease; }
+  nav.map a:hover{ border-color:var(--chalk-blue); color:var(--chalk-blue); }
+
+  section.intro{ padding:48px 0 8px; }
+  section.intro p{ color:var(--chalk-muted); }
+  section.intro p strong{ color:var(--chalk); font-weight:600; }
+
+  section.stage{ position:relative; padding:64px 0 56px; border-bottom:1px solid var(--rule); }
+  section.stage:last-of-type{ border-bottom:none; }
+  .stage-head{ position:relative; margin-bottom:28px; }
+  .watermark{ font-family:'Caveat', cursive; font-weight:600; font-size:clamp(30px, 8vw, 52px); color:var(--chalk-gold); opacity:0.16; position:absolute; top:-14px; right:0; white-space:nowrap; pointer-events:none; z-index:0; transform:rotate(-2deg); }
+  .stage-number{ font-family:'Fraunces', serif; font-style:italic; font-weight:500; font-size:15px; color:var(--chalk-gold); display:block; margin-bottom:10px; }
+  .stage-meta{ font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--chalk-blue); display:block; margin-bottom:14px; }
+  h2.stage-title{ font-family:'Fraunces', serif; font-weight:600; font-size:clamp(26px, 4vw, 34px); margin:0 0 6px; position:relative; z-index:1; max-width:82%; }
+  .stage-sub{ color:var(--chalk-muted); font-size:15.5px; margin:0; max-width:78%; }
+  h3.block-label{ font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--chalk-muted); margin:34px 0 6px; padding-bottom:8px; border-bottom:1px solid var(--rule); }
+
+  /* subject accordion blocks */
+  details.subject{ margin:0; border-bottom:1px solid var(--rule); }
+  details.subject:last-child{ border-bottom:none; }
+  details.subject summary{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:600; font-size:17.5px; color:var(--chalk-gold);
+    cursor:pointer; padding:14px 26px 14px 0; list-style:none; position:relative;
+  }
+  details.subject summary::-webkit-details-marker{ display:none; }
+  details.subject summary::after{ content:"–"; position:absolute; right:2px; top:14px; color:var(--chalk-muted); font-family:'JetBrains Mono',monospace; font-size:14px; }
+  details.subject:not([open]) summary::after{ content:"+"; }
+  details.subject summary::marker{ display:none; }
+  ul.sub-topics{ list-style:none; margin:0; padding:2px 0 18px; }
+  ul.sub-topics li{ padding:7px 0 7px 20px; position:relative; font-size:15.5px; border-bottom:1px dashed var(--rule); color:var(--chalk); }
+  ul.sub-topics li:last-child{ border-bottom:none; }
+  ul.sub-topics li::before{ content:"–"; position:absolute; left:0; top:7px; color:var(--chalk-blue); }
+  ul.sub-topics li strong{ color:var(--chalk-gold); font-weight:600; }
+
+  .resources{ display:flex; flex-wrap:wrap; gap:9px; }
+  .resources a{ font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--chalk-blue); background:var(--bg-panel); border:1px solid var(--rule); padding:8px 12px; border-radius:3px; text-decoration:none; line-height:1.3; }
+  .resources a:hover{ border-color:var(--chalk-blue); }
+
+  .milestone{ margin-top:28px; padding:18px 20px; background:var(--bg-panel); border-left:3px solid var(--chalk-coral); border-radius:2px; }
+  .milestone .m-label{ font-family:'JetBrains Mono', monospace; font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--chalk-coral); display:block; margin-bottom:6px; }
+  .milestone p{ margin:0; font-size:15.5px; color:var(--chalk); }
+
+  section.cross{ padding:56px 0; border-bottom:1px solid var(--rule); }
+  section.cross h2{ font-family:'Fraunces', serif; font-weight:600; font-size:26px; margin:0 0 8px; }
+  section.cross .stage-sub{ max-width:none; margin-bottom:26px; }
+  ol.habits, ol.pitfalls{ margin:0; padding:0; list-style:none; counter-reset:item; }
+  ol.habits li, ol.pitfalls li{ counter-increment:item; padding:14px 0 14px 44px; position:relative; border-bottom:1px solid var(--rule); font-size:16px; }
+  ol.habits li:last-child, ol.pitfalls li:last-child{ border-bottom:none; }
+  ol.habits li::before, ol.pitfalls li::before{ content:counter(item, decimal-leading-zero); position:absolute; left:0; top:13px; font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--chalk-gold); }
+  ol.pitfalls li::before{ color:var(--chalk-coral); }
+  li strong{ color:var(--chalk); }
+
+  section.table-section{ padding:56px 0 88px; }
+  section.table-section h2{ font-family:'Fraunces', serif; font-weight:600; font-size:26px; margin:0 0 26px; }
+  .rtable{ width:100%; border-collapse:collapse; font-size:14.5px; }
+  .rtable th, .rtable td{ text-align:left; padding:12px 10px; border-bottom:1px solid var(--rule); vertical-align:top; }
+  .rtable th{ font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--chalk-muted); font-weight:500; }
+  .rtable td.stage-col{ color:var(--chalk-gold); font-family:'Fraunces', serif; font-style:italic; white-space:nowrap; }
+  .rtable td.age-col{ color:var(--chalk-muted); font-family:'JetBrains Mono', monospace; font-size:12.5px; white-space:nowrap; }
+  .rtable-wrap{ overflow-x:auto; border:1px solid var(--rule); border-radius:4px; padding:4px 14px; background:var(--bg-panel); }
+
+  footer{ padding:36px 0 60px; }
+  footer p{ font-size:13px; color:var(--chalk-muted); font-family:'JetBrains Mono', monospace; }
+
+  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
+
+  @media (max-width:600px){
+    header.hero{ padding:56px 0 40px; }
+    section.stage{ padding:44px 0 40px; }
+    .stage-title, .stage-sub{ max-width:100%; }
+    .watermark{ font-size:26px; top:-6px; opacity:0.14; }
+    .rtable{ font-size:13px; }
+    details.subject summary{ font-size:16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Every subtopic, in order</span>
+    <h1 class="title">The Mathematician's <em>Path</em></h1>
+    <p class="subtitle">From Year 7 arithmetic to the edge of what's known — every stage broken down subject by subject, and every subject broken down into every topic inside it. Tap a subject to expand it.</p>
+    <nav class="map" aria-label="Jump to stage">
+      <a href="#foundations">01 Foundations</a>
+      <a href="#pre-university">02 Pre-University</a>
+      <a href="#undergraduate">03 Undergraduate</a>
+      <a href="#specialization">04 Specialization</a>
+      <a href="#graduate">05 Graduate</a>
+      <a href="#research">06 Research</a>
+      <a href="#habits">How to study</a>
+      <a href="#resources">Quick reference</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="intro">
+    <div class="wrap reveal">
+      <p>Nothing here is a subject name with nothing under it. Every subject below is opened up into the actual topics inside it — the way a real syllabus would list them. <strong>Work through each subject's list in order</strong>, and don't move to the next subject until you can do every item on the list without help.</p>
+    </div>
+  </section>
+
+  <!-- STAGE 1 -->
+  <section class="stage" id="foundations">
+    <div class="wrap">
+      <div class="stage-head reveal">
+        <span class="watermark">2x + 3 = 11</span>
+        <span class="stage-number">Stage I</span>
+        <span class="stage-meta">Foundations · Year 7–10 · Age ~12–15</span>
+        <h2 class="stage-title">Get arithmetic and algebra into your hands, not just your head</h2>
+        <p class="stage-sub">Everything later collapses if this stage is rushed. Fluency here means you don't have to think about it.</p>
+      </div>
+
+      <h3 class="block-label">Every subject, fully expanded</h3>
+
+      <details class="subject reveal" open>
+        <summary>1. Arithmetic Mastery</summary>
+        <ul class="sub-topics">
+          <li>Fractions — addition & subtraction with unlike denominators</li>
+          <li>Fractions — multiplication, division, and mixed numbers</li>
+          <li>Converting between fractions, decimals, and percentages</li>
+          <li>Decimals — place value, all four operations, rounding, significant figures</li>
+          <li>Percentages — percentage of a quantity, percentage increase/decrease, reverse percentage problems</li>
+          <li>Ratio & proportion — simplifying ratios, dividing a quantity in a given ratio</li>
+          <li>Direct and inverse proportion problems</li>
+          <li>Order of operations (BODMAS / PEMDAS)</li>
+          <li>Estimation and mental-math fluency, without a calculator</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>2. Pre-Algebra</summary>
+        <ul class="sub-topics">
+          <li>Understanding variables and algebraic expressions</li>
+          <li>Evaluating expressions by substitution</li>
+          <li>Simplifying expressions — combining like terms</li>
+          <li>Solving one-step and two-step linear equations</li>
+          <li>Solving and graphing simple inequalities on a number line</li>
+          <li>Translating word problems into equations</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>3. Algebra I</summary>
+        <ul class="sub-topics">
+          <li>Multi-step linear equations in one variable</li>
+          <li>Systems of two linear equations — solving by substitution</li>
+          <li>Systems of two linear equations — solving by elimination</li>
+          <li>Graphing linear equations — slope, x- and y-intercepts</li>
+          <li>Factoring — greatest common factor</li>
+          <li>Factoring — difference of squares</li>
+          <li>Factoring — quadratic trinomials</li>
+          <li>Solving quadratics by factoring</li>
+          <li>Solving quadratics by completing the square</li>
+          <li>Solving quadratics with the quadratic formula</li>
+          <li>Exponent rules — product, quotient, power rules, zero and negative exponents</li>
+          <li>Simplifying radicals and square roots</li>
+          <li>Functions — domain, range, function notation, evaluating f(x)</li>
+          <li>Polynomials — addition, subtraction, multiplication, basic long division</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>4. Geometry</summary>
+        <ul class="sub-topics">
+          <li>Euclid's five postulates and axiomatic thinking</li>
+          <li>Angles — complementary, supplementary, vertical, angles on a line and at a point</li>
+          <li>Parallel lines and transversals — corresponding and alternate angles</li>
+          <li>Triangle congruence — SSS, SAS, ASA, AAS, RHS</li>
+          <li>Triangle similarity — AA, SAS, SSS similarity criteria</li>
+          <li>Circle theorems — angle at the center, angle in a semicircle, cyclic quadrilaterals, tangent properties</li>
+          <li>Area and perimeter of polygons and circles</li>
+          <li>Volume and surface area — prisms, cylinders, cones, spheres</li>
+          <li>Coordinate geometry — distance formula, midpoint formula, equation of a line</li>
+          <li>Writing your first two-column and paragraph proofs</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>5. Basic Trigonometry</summary>
+        <ul class="sub-topics">
+          <li>Right-triangle ratios — sine, cosine, tangent (SOH-CAH-TOA)</li>
+          <li>Solving for missing sides and missing angles</li>
+          <li>Angles of elevation and depression</li>
+          <li>First look at the unit circle and radian measure</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>6. Number Theory</summary>
+        <ul class="sub-topics">
+          <li>Prime numbers and prime factorization</li>
+          <li>Greatest common divisor and least common multiple, via the Euclidean algorithm</li>
+          <li>Modular arithmetic basics — clock arithmetic, remainders</li>
+          <li>Divisibility rules and simple divisibility proofs</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>7. Problem-Solving / Competition Math</summary>
+        <ul class="sub-topics">
+          <li>Working through AMC 8–style problems</li>
+          <li>The pigeonhole principle</li>
+          <li>Basic combinatorics puzzles — counting arrangements</li>
+          <li>Logic puzzles and simple invariants</li>
+        </ul>
+      </details>
+
+      <h3 class="block-label">Resources</h3>
+      <div class="resources reveal">
+        <a href="https://www.khanacademy.org/math" target="_blank" rel="noopener">Khan Academy — full Algebra I & Geometry</a>
+        <a href="https://artofproblemsolving.com/store/list/aops-curriculum" target="_blank" rel="noopener">AoPS — Introduction to Algebra & Geometry</a>
+        <a href="https://artofproblemsolving.com/wiki/index.php/AMC_8_Problems_and_Solutions" target="_blank" rel="noopener">Past AMC 8 / AMC 10 papers</a>
+      </div>
+
+      <div class="milestone reveal">
+        <span class="m-label">You're ready to move on when</span>
+        <p>You can solve a system of equations without hesitation, prove two triangles congruent from the axioms, and explain — in your own words — why √2 can't be a fraction.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section class="stage" id="pre-university">
+    <div class="wrap">
+      <div class="stage-head reveal">
+        <span class="watermark">∫₀¹ x² dx = ⅓</span>
+        <span class="stage-number">Stage II</span>
+        <span class="stage-meta">Pre-University · Age ~15–18</span>
+        <h2 class="stage-title">Meet calculus, and write your first real proofs</h2>
+        <p class="stage-sub">This stage quietly decides who continues in math. Proof-writing is the actual gate — not calculus.</p>
+      </div>
+
+      <h3 class="block-label">Every subject, fully expanded</h3>
+
+      <details class="subject reveal" open>
+        <summary>1. Algebra II</summary>
+        <ul class="sub-topics">
+          <li>Polynomial functions — end behavior, roots, the Factor Theorem, the Remainder Theorem</li>
+          <li>Rational functions — asymptotes, simplifying, solving rational equations</li>
+          <li>Exponential functions — growth & decay, e as a base</li>
+          <li>Logarithmic functions — properties of logs, solving log equations</li>
+          <li>Sequences — arithmetic and geometric</li>
+          <li>Series — sigma notation, sum formulas, infinite geometric series</li>
+          <li>Complex numbers — i, arithmetic with complex numbers, the complex plane</li>
+          <li>The binomial theorem and Pascal's triangle</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>2. Precalculus</summary>
+        <ul class="sub-topics">
+          <li>Trigonometric identities — Pythagorean, sum/difference, double-angle</li>
+          <li>Solving trigonometric equations</li>
+          <li>Conic sections — parabola, ellipse, hyperbola equations</li>
+          <li>Polar coordinates and converting between polar and Cartesian</li>
+          <li>Vectors in 2D — addition, dot product, magnitude</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>3. Calculus (AB/BC-equivalent)</summary>
+        <ul class="sub-topics">
+          <li>Limits — formal definition, evaluating algebraically, limits at infinity</li>
+          <li>Continuity and the Intermediate Value Theorem</li>
+          <li>Derivatives — definition as a limit</li>
+          <li>Derivative rules — power, product, quotient, chain rule</li>
+          <li>Applications — optimization problems, related rates, curve sketching</li>
+          <li>Integrals — antiderivatives, definite and indefinite integrals</li>
+          <li>The Fundamental Theorem of Calculus</li>
+          <li>Integration techniques — substitution, basic integration by parts</li>
+          <li>First look at differential equations — separable equations</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>4. Statistics & Probability</summary>
+        <ul class="sub-topics">
+          <li>Descriptive statistics — mean, median, mode, standard deviation, variance</li>
+          <li>Combinatorics — permutations, combinations, the multiplication principle</li>
+          <li>Probability rules — independence, conditional probability, an introduction to Bayes' theorem</li>
+          <li>Random variables — discrete vs. continuous</li>
+          <li>Common distributions — binomial, normal distribution</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>5. Introduction to Mathematical Proof</summary>
+        <ul class="sub-topics">
+          <li>Propositional logic — AND, OR, NOT, implication, truth tables</li>
+          <li>Basic set theory — unions, intersections, subsets, Venn diagrams</li>
+          <li>Direct proof technique</li>
+          <li>Proof by contrapositive</li>
+          <li>Proof by contradiction</li>
+          <li>Mathematical induction — weak and strong</li>
+        </ul>
+      </details>
+
+      <h3 class="block-label">Resources</h3>
+      <div class="resources reveal">
+        <a href="https://www.3blue1brown.com/topics/calculus" target="_blank" rel="noopener">3Blue1Brown — Essence of Calculus</a>
+        <a href="https://www.3blue1brown.com/topics/linear-algebra" target="_blank" rel="noopener">3Blue1Brown — Essence of Linear Algebra</a>
+        <a href="https://www.google.com/search?q=Daniel+Velleman+How+to+Prove+It" target="_blank" rel="noopener">Velleman — "How to Prove It"</a>
+        <a href="https://tutorial.math.lamar.edu/" target="_blank" rel="noopener">Paul's Online Math Notes</a>
+        <a href="https://artofproblemsolving.com/wiki/index.php/AIME_Problems_and_Solutions" target="_blank" rel="noopener">Past AIME papers</a>
+      </div>
+
+      <div class="milestone reveal">
+        <span class="m-label">You're ready to move on when</span>
+        <p>You can derive a derivative from first principles, prove a claim by induction unaided, and read an ε–δ argument without your eyes glazing over.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section class="stage" id="undergraduate">
+    <div class="wrap">
+      <div class="stage-head reveal">
+        <span class="watermark">det(A − λI) = 0</span>
+        <span class="stage-number">Stage III</span>
+        <span class="stage-meta">Undergraduate Core · Age ~18–21</span>
+        <h2 class="stage-title">Where math stops being computation and becomes argument</h2>
+        <p class="stage-sub">A genuine undergraduate math degree's core. Real Analysis is the biggest filter in the whole path.</p>
+      </div>
+
+      <h3 class="block-label">Every subject, fully expanded</h3>
+
+      <details class="subject reveal" open>
+        <summary>1. Multivariable Calculus</summary>
+        <ul class="sub-topics">
+          <li>Partial derivatives and the gradient</li>
+          <li>Multiple integrals — double and triple integrals</li>
+          <li>Change of variables and the Jacobian</li>
+          <li>Vector fields, line integrals, surface integrals</li>
+          <li>Green's Theorem</li>
+          <li>Stokes' Theorem</li>
+          <li>The Divergence Theorem</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>2. Linear Algebra</summary>
+        <ul class="sub-topics">
+          <li>Vector spaces and subspaces</li>
+          <li>Linear independence, basis, dimension</li>
+          <li>Linear transformations and their matrix representations</li>
+          <li>Determinants and their properties</li>
+          <li>Eigenvalues and eigenvectors</li>
+          <li>Diagonalization</li>
+          <li>Inner product spaces, orthogonality, the Gram-Schmidt process</li>
+          <li>The Spectral Theorem</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>3. Real Analysis</summary>
+        <ul class="sub-topics">
+          <li>Construction and properties of the real numbers, the completeness axiom</li>
+          <li>Sequences — convergence, Cauchy sequences</li>
+          <li>Series — convergence tests</li>
+          <li>Limits and continuity, done rigorously with ε–δ</li>
+          <li>Differentiability and the Mean Value Theorem</li>
+          <li>Riemann integration</li>
+          <li>Sequences and series of functions — pointwise vs. uniform convergence</li>
+          <li>Metric spaces — open/closed sets, compactness, connectedness</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>4. Abstract Algebra</summary>
+        <ul class="sub-topics">
+          <li>Groups — definitions, examples, subgroups</li>
+          <li>Cyclic groups, symmetric groups</li>
+          <li>Cosets and Lagrange's Theorem</li>
+          <li>Normal subgroups and quotient groups</li>
+          <li>Homomorphisms and isomorphisms</li>
+          <li>Rings and fields — definitions and examples</li>
+          <li>Polynomial rings</li>
+          <li>Introduction to Galois theory</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>5. Ordinary Differential Equations</summary>
+        <ul class="sub-topics">
+          <li>First-order ODEs — separable, linear, exact equations</li>
+          <li>Second-order linear ODEs — homogeneous and non-homogeneous</li>
+          <li>Systems of ODEs</li>
+          <li>Laplace transforms</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>6. Probability Theory</summary>
+        <ul class="sub-topics">
+          <li>Axiomatic probability — the Kolmogorov axioms</li>
+          <li>Random variables, expectation, variance</li>
+          <li>Joint distributions</li>
+          <li>The Law of Large Numbers</li>
+          <li>The Central Limit Theorem</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>7. Discrete Mathematics</summary>
+        <ul class="sub-topics">
+          <li>Propositional and predicate logic</li>
+          <li>Advanced counting, an introduction to generating functions</li>
+          <li>Graph theory — trees, connectivity, coloring, Euler and Hamiltonian paths</li>
+          <li>Introduction to algorithms and computational complexity</li>
+        </ul>
+      </details>
+
+      <h3 class="block-label">Resources</h3>
+      <div class="resources reveal">
+        <a href="https://www.google.com/search?q=Axler+Linear+Algebra+Done+Right" target="_blank" rel="noopener">Axler — "Linear Algebra Done Right"</a>
+        <a href="https://www.google.com/search?q=Rudin+Principles+of+Mathematical+Analysis" target="_blank" rel="noopener">Rudin — "Principles of Mathematical Analysis"</a>
+        <a href="https://www.google.com/search?q=Dummit+Foote+Abstract+Algebra" target="_blank" rel="noopener">Dummit & Foote — "Abstract Algebra"</a>
+        <a href="https://ocw.mit.edu/search/?d=Mathematics" target="_blank" rel="noopener">MIT OpenCourseWare — Mathematics</a>
+      </div>
+
+      <div class="milestone reveal">
+        <span class="m-label">You're ready to move on when</span>
+        <p>You can write a full ε–δ proof from scratch, prove Lagrange's theorem in group theory, and explain — geometrically — what diagonalizing a matrix means.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAGE 4 -->
+  <section class="stage" id="specialization">
+    <div class="wrap">
+      <div class="stage-head reveal">
+        <span class="watermark">π₁(S¹) ≅ ℤ</span>
+        <span class="stage-number">Stage IV</span>
+        <span class="stage-meta">Specialization · Age ~20–23</span>
+        <h2 class="stage-title">Pick a direction, and start reading actual papers</h2>
+        <p class="stage-sub">No single correct track from here. Pick one based on what pulled you in during Stage III, go deep.</p>
+      </div>
+
+      <h3 class="block-label">Track A — Pure Mathematics</h3>
+      <details class="subject reveal" open>
+        <summary>Complex Analysis</summary>
+        <ul class="sub-topics">
+          <li>Holomorphic functions and the Cauchy-Riemann equations</li>
+          <li>Cauchy's Integral Theorem and Formula</li>
+          <li>Power series, Laurent series</li>
+          <li>Residue theory and contour integration</li>
+        </ul>
+      </details>
+      <details class="subject reveal">
+        <summary>Topology</summary>
+        <ul class="sub-topics">
+          <li>Point-set topology — open sets, compactness, connectedness</li>
+          <li>Continuous functions and homeomorphisms</li>
+          <li>Algebraic topology basics — the fundamental group</li>
+          <li>Covering spaces</li>
+        </ul>
+      </details>
+      <details class="subject reveal">
+        <summary>Number Theory</summary>
+        <ul class="sub-topics">
+          <li>Congruences and modular arithmetic in depth</li>
+          <li>Quadratic reciprocity</li>
+          <li>Diophantine equations</li>
+          <li>Introduction to algebraic number theory</li>
+        </ul>
+      </details>
+
+      <h3 class="block-label">Track B — Applied Mathematics</h3>
+      <details class="subject reveal">
+        <summary>Numerical Analysis</summary>
+        <ul class="sub-topics">
+          <li>Root-finding methods — bisection, Newton's method</li>
+          <li>Interpolation and approximation</li>
+          <li>Numerical integration</li>
+          <li>Error analysis and stability</li>
+        </ul>
+      </details>
+      <details class="subject reveal">
+        <summary>Optimization Theory</summary>
+        <ul class="sub-topics">
+          <li>Linear programming and the simplex method</li>
+          <li>Convex sets and convex functions</li>
+          <li>Lagrange multipliers and KKT conditions</li>
+        </ul>
+      </details>
+      <details class="subject reveal">
+        <summary>Partial Differential Equations</summary>
+        <ul class="sub-topics">
+          <li>The heat equation</li>
+          <li>The wave equation</li>
+          <li>Laplace's equation</li>
+          <li>Separation of variables, Fourier series methods</li>
+        </ul>
+      </details>
+
+      <h3 class="block-label">Track C — AI / ML-Oriented</h3>
+      <details class="subject reveal">
+        <summary>Convex Optimization</summary>
+        <ul class="sub-topics">
+          <li>Convex sets and convex functions</li>
+          <li>Duality theory</li>
+          <li>Gradient descent and its variants</li>
+        </ul>
+      </details>
+      <details class="subject reveal">
+        <summary>Information Theory</summary>
+        <ul class="sub-topics">
+          <li>Entropy and mutual information</li>
+          <li>Channel capacity</li>
+          <li>Source coding basics</li>
+        </ul>
+      </details>
+      <details class="subject reveal">
+        <summary>Statistical Learning Theory</summary>
+        <ul class="sub-topics">
+          <li>Bias-variance tradeoff</li>
+          <li>VC dimension</li>
+          <li>Generalization bounds</li>
+        </ul>
+      </details>
+      <details class="subject reveal">
+        <summary>Stochastic Processes</summary>
+        <ul class="sub-topics">
+          <li>Markov chains</li>
+          <li>Martingales</li>
+          <li>Introduction to Brownian motion</li>
+        </ul>
+      </details>
+
+      <h3 class="block-label">Alongside the coursework</h3>
+      <ul class="sub-topics reveal">
+        <li>Start reading real papers on arXiv in your chosen area — slowly, one section at a time</li>
+        <li>Apply to an REU or find a professor willing to supervise a small project</li>
+        <li>Write a senior thesis if your program offers one</li>
+      </ul>
+
+      <h3 class="block-label">Resources</h3>
+      <div class="resources reveal">
+        <a href="https://www.google.com/search?q=Boyd+Vandenberghe+Convex+Optimization" target="_blank" rel="noopener">Boyd & Vandenberghe — "Convex Optimization"</a>
+        <a href="https://www.google.com/search?q=Munkres+Topology" target="_blank" rel="noopener">Munkres — "Topology"</a>
+        <a href="https://arxiv.org/" target="_blank" rel="noopener">arXiv.org</a>
+        <a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>
+      </div>
+
+      <div class="milestone reveal">
+        <span class="m-label">You're ready to move on when</span>
+        <p>You can read a paper's introduction and methods section and roughly follow the argument, and you've finished one independent project or thesis.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAGE 5 -->
+  <section class="stage" id="graduate">
+    <div class="wrap">
+      <div class="stage-head reveal">
+        <span class="watermark">μ(⋃ Aₙ) = Σ μ(Aₙ)</span>
+        <span class="stage-number">Stage V</span>
+        <span class="stage-meta">Graduate Foundations · Age ~22–25</span>
+        <h2 class="stage-title">The last layer of general theory before the frontier</h2>
+        <p class="stage-sub">After this, everything is specific to your problem, not to a general syllabus.</p>
+      </div>
+
+      <h3 class="block-label">Every subject, fully expanded</h3>
+
+      <details class="subject reveal" open>
+        <summary>1. Measure Theory & Lebesgue Integration</summary>
+        <ul class="sub-topics">
+          <li>σ-algebras and measures</li>
+          <li>Lebesgue measure on ℝ</li>
+          <li>Measurable functions</li>
+          <li>Lebesgue integration</li>
+          <li>Convergence theorems — Monotone Convergence, Dominated Convergence</li>
+          <li>Lᵖ spaces</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>2. Functional Analysis</summary>
+        <ul class="sub-topics">
+          <li>Normed spaces and Banach spaces</li>
+          <li>Hilbert spaces</li>
+          <li>Bounded linear operators</li>
+          <li>The Hahn-Banach theorem</li>
+          <li>The Open Mapping theorem</li>
+          <li>Spectral theory of operators</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>3. Algebraic Topology / Differential Geometry (track-dependent)</summary>
+        <ul class="sub-topics">
+          <li>Algebraic topology — fundamental group, covering spaces, homology</li>
+          <li>Differential geometry — manifolds, tangent spaces, curvature</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>4. Advanced Probability</summary>
+        <ul class="sub-topics">
+          <li>Measure-theoretic foundations of probability</li>
+          <li>Conditional expectation</li>
+          <li>Martingales in depth</li>
+          <li>Stochastic processes, formally</li>
+        </ul>
+      </details>
+
+      <details class="subject reveal">
+        <summary>5. Graduate Seminars & Qualifying Exams</summary>
+        <ul class="sub-topics">
+          <li>Track-specific graduate seminars — where coursework ends and current research begins</li>
+          <li>Preparing for and passing qualifying exams</li>
+        </ul>
+      </details>
+
+      <h3 class="block-label">Resources</h3>
+      <div class="resources reveal">
+        <a href="https://www.google.com/search?q=Royden+Fitzpatrick+Real+Analysis" target="_blank" rel="noopener">Royden & Fitzpatrick — "Real Analysis"</a>
+        <a href="https://www.google.com/search?q=Rudin+Functional+Analysis" target="_blank" rel="noopener">Rudin — "Functional Analysis"</a>
+        <a href="https://pi.math.cornell.edu/~hatcher/AT/ATpage.html" target="_blank" rel="noopener">Hatcher — "Algebraic Topology" (free)</a>
+      </div>
+
+      <div class="milestone reveal">
+        <span class="m-label">You're ready to move on when</span>
+        <p>You can pass a qualifying exam in your specialty, and you've found a specific open question — not just a subject you like.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAGE 6 -->
+  <section class="stage" id="research">
+    <div class="wrap">
+      <div class="stage-head reveal">
+        <span class="watermark">Lemma 4.2 (yours to prove)</span>
+        <span class="stage-number">Stage VI</span>
+        <span class="stage-meta">Research · Age ~24+</span>
+        <h2 class="stage-title">Nobody has solved your problem yet — that's the whole point</h2>
+        <p class="stage-sub">Every earlier stage had a known answer in the back of the book. This one doesn't.</p>
+      </div>
+
+      <h3 class="block-label">Every step, fully expanded</h3>
+      <details class="subject reveal" open>
+        <summary>The research process</summary>
+        <ul class="sub-topics">
+          <li>Find an advisor and a genuinely open problem, small enough to be tractable in 2–4 years</li>
+          <li>Do a deep literature review in that narrow sub-area, not the whole field</li>
+          <li>Attempt original proofs or results — expect months of dead ends per real insight</li>
+          <li>Write results up formally in LaTeX, following your field's journal conventions</li>
+          <li>Present at seminars, take feedback seriously, revise</li>
+          <li>Submit to a conference or journal, go through peer review, revise again</li>
+          <li>Continue as a postdoc or faculty member, and mentor the next student on this same path</li>
+        </ul>
+      </details>
+
+      <h3 class="block-label">Resources</h3>
+      <div class="resources reveal">
+        <a href="https://arxiv.org/" target="_blank" rel="noopener">arXiv.org</a>
+        <a href="https://mathscinet.ams.org/mathscinet/" target="_blank" rel="noopener">MathSciNet</a>
+        <a href="https://www.google.com/search?q=math+conferences+in+my+field" target="_blank" rel="noopener">Conferences in your sub-field</a>
+      </div>
+
+      <div class="milestone reveal">
+        <span class="m-label">The milestone here</span>
+        <p>Your first accepted paper, or a successful thesis defense. From Year 7 to this point is typically a decade or more — that's normal, not slow.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HABITS -->
+  <section class="cross" id="habits">
+    <div class="wrap">
+      <h2 class="reveal">How to actually study math, every day</h2>
+      <p class="stage-sub reveal">The stages above tell you what to learn. This is how the learning happens — the same five habits at every stage.</p>
+      <ol class="habits reveal">
+        <li><strong>Solve problems by hand, daily.</strong> Watching a video explain a proof is not the same skill as producing one yourself.</li>
+        <li><strong>Re-derive results instead of memorizing them.</strong> If you can rebuild the quadratic formula from scratch, you understand it in a way memorization never gives you.</li>
+        <li><strong>Teach it to someone else.</strong> If you can't explain a proof in plain language, you've followed it, not understood it.</li>
+        <li><strong>Keep a problem journal.</strong> Write down what you couldn't solve, and return to it in two or three weeks without looking at your old attempt.</li>
+        <li><strong>Join a community.</strong> Math Stack Exchange, r/math, a local olympiad club — isolation is the easiest way to stall out.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- PITFALLS -->
+  <section class="cross" id="pitfalls">
+    <div class="wrap">
+      <h2 class="reveal">Where people actually get stuck</h2>
+      <p class="stage-sub reveal">Not hypothetical mistakes — the specific, repeated reasons students stop progressing.</p>
+      <ol class="pitfalls reveal">
+        <li><strong>Treating proofs as optional.</strong> Most textbook problems are computation, not proof. Both are needed.</li>
+        <li><strong>Learning only from videos.</strong> Understanding a video isn't the same as reproducing the argument on a blank page.</li>
+        <li><strong>Rushing Real Analysis.</strong> The biggest gatekeeper course in the whole path — slow down deliberately here.</li>
+        <li><strong>Comparing your pace to other people's.</strong> A decade from Year 7 to a first paper is the normal timeline.</li>
+        <li><strong>Reading textbooks passively.</strong> Math is built by doing the exercises, including the ones you'd rather skip.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- RESOURCE TABLE -->
+  <section class="table-section" id="resources">
+    <div class="wrap">
+      <h2 class="reveal">Quick reference</h2>
+      <div class="rtable-wrap reveal">
+        <table class="rtable">
+          <thead>
+            <tr><th>Stage</th><th>Age</th><th>Core subjects</th><th>Start here</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="stage-col">I · Foundations</td><td class="age-col">12–15</td><td>Algebra I, Geometry, basic trig</td><td>Khan Academy</td></tr>
+            <tr><td class="stage-col">II · Pre-University</td><td class="age-col">15–18</td><td>Calculus, Algebra II, intro proofs</td><td>3Blue1Brown + "How to Prove It"</td></tr>
+            <tr><td class="stage-col">III · Undergraduate</td><td class="age-col">18–21</td><td>Real Analysis, Linear & Abstract Algebra</td><td>Rudin, Axler</td></tr>
+            <tr><td class="stage-col">IV · Specialization</td><td class="age-col">20–23</td><td>Topology / Optimization / your chosen track</td><td>arXiv, a supervised project</td></tr>
+            <tr><td class="stage-col">V · Graduate</td><td class="age-col">22–25</td><td>Measure Theory, Functional Analysis</td><td>Royden & Fitzpatrick</td></tr>
+            <tr><td class="stage-col">VI · Research</td><td class="age-col">24+</td><td>Your specific open problem</td><td>An advisor</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>NO SHORTCUTS · ONE PROBLEM AT A TIME</p>
+  </div>
+</footer>
+
+<script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
